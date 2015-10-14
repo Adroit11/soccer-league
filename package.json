@@ -1,0 +1,22 @@
+{
+  "name": "gg-soccer",
+  "version": "0.1.0",
+  "description": "Super Secret Soccer App for GoGuardian Front End Engineer test",
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0"
+  },
+  "scripts": {
+    "build": "browserify -t babelify public/scripts/main.js -o public/scripts/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost/"
+  },
+  "author": "Joshua Carter",
+  "license": "UNLICENSED"
+}
