@@ -13,7 +13,7 @@
     "browserify": "^11.2.0"
   },
   "scripts": {
-    "build": "browserify -t babelify public/scripts/main.js -o public/scripts/bundle.js"
+    "build": "browserify -t babelify public/app/app.js -o public/js/bundle.js"
   },
   "repository": {
     "type": "git",
