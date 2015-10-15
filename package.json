@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "Super Secret Soccer App for GoGuardian Front End Engineer test",
   "dependencies": {
+    "angular": "^1.4.7",
+    "ngreact": "^0.1.7",
     "react": "^0.14.0",
     "react-dom": "^0.14.0"
   },
