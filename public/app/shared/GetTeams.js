@@ -43,14 +43,16 @@ var GetTeams = class {
         });
     }
     
-    //get all teams along with their wins/losses and ranking score, 
-    //response is 'cached'
+    //get all teams along with their wins/losses and ranking score, response is 'cached'
+    //returns a promise that resolves to teams on success
     all () {
         var mData, tData, sortedTeams;
         //if we've already retrieved and processed the teams
         if (this._teams) {
-            //return them
-            return this._teams;
+            //return them as a promise
+            return this._$q(function (resolve) {
+                resolve(this._teams);
+            }.bind(this));
         }
         //else, get them now along with matches, return a promise
         return this._$q.all([
