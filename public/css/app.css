@@ -97,6 +97,7 @@ body {
 
 @media (max-width: 768px) {
     #team-list { font-size: 1.1em; font-weight: bold; max-width: 320px; }
+    #team-list .row > div { padding-left: 10px; padding-right: 10px; }
 }
 
 
