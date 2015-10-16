@@ -12,14 +12,28 @@ import { TeamLogo } from '../shared/TeamLogo.js';
 import { TeamStats } from '../shared/TeamStats.js';
 //create TeamEntry React component
 var TeamEntry = class extends React.Component {
+    constructor (props) {
+        //pass props to parent
+        super(props)
+        //create path for our team
+        this.teamPath = '/team/' + this.props.teamId;
+    }
+    
+    handleClick (event) {
+        this.props.nav(this.teamPath);
+    }
+    
     render () {
+        var teamHref = '#' + this.teamPath;
         return (
-            <div className="row">
+            <div onClick={this.handleClick.bind(this)} className="row">
                 <div className="col-xs-2 col-sm-1">
                     <TeamLogo teamId={this.props.teamId} />
                 </div>
                 <div className="col-xs-7 col-sm-8">
-                    {this.props.name}
+                    <a href={teamHref}>
+                        {this.props.name}
+                    </a>
                 </div>
                 <div className="col-xs-3 col-sm-3 text-right">
                     <TeamStats {...this.props.stats} />
