@@ -6,9 +6,10 @@
 "use strict";
 //create GetMatches service
 var GetMatches = class {
-    constructor ($http, API_ROOT) {
+    constructor ($http, $q, API_ROOT) {
         //private static properties that define service
         this._$http = $http;
+        this._$q = $q;
         this._apiRoot = API_ROOT;
         //private properties that define instance
         //store matches after they are first retrieved
@@ -65,17 +66,20 @@ var GetMatches = class {
     }
     
     //get all matches, response is 'cached'
+    //returns a promise that resolves to matches on success
     all () {
         //if we've already retrieved and processed the matches
         if (this._matches && this._matchesByTeam) {
-            //return them
-            return this._returnMatches();
+            //return them as a promise
+            return this._$q(function (resolve) {
+                resolve(this._returnMatches());
+            }.bind(this));
         }
         //else, get them now, return a promise
         return this._allMatches();
     }
 };
 //inject resources and contants into service
-GetMatches.$inject = ['$http', 'API_ROOT'];
+GetMatches.$inject = ['$http', '$q', 'API_ROOT'];
 //export GetTeams service
 export { GetMatches };
