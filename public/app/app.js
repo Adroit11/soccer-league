@@ -15,11 +15,11 @@ import ngRouteModule from 'angular-route';
 import React from 'react';
 import ngReact from 'ngreact';
 //include components
-import { TeamListController, TeamList } from './league/TeamList.js';
-import { TeamController, TeamView } from './team/TeamView.js';
+import { TeamListDirective } from './league/TeamList.js';
+import { TeamDirective } from './team/TeamView.js';
 //include services
-import { GetTeams } from './shared/GetTeams.js';
-import { GetMatches } from './shared/GetMatches.js';
+import { GetTeams } from './services/GetTeams.js';
+import { GetMatches } from './services/GetMatches.js';
 //include other objects
 import { config } from './config.js';
 //create app module
@@ -31,15 +31,5 @@ var app = angular.module('GGSoccer', ['react', 'ngRoute'])
     .service('GetTeams', GetTeams)
     .service('GetMatches', GetMatches)
     //wrap React components in Angular directives
-    .directive("teamList", function (reactDirective) {
-       return reactDirective(TeamList, undefined, {
-           controller: TeamListController, 
-           controllerAs: 'scope'
-       });
-    })
-    .directive("teamView", function (reactDirective) {
-        return reactDirective(TeamView, undefined, {
-            controller: TeamController,
-            controllerAs: 'scope'   
-        });
-    });
+    .directive("teamList", TeamListDirective)
+    .directive("teamView", TeamDirective);
