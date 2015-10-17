@@ -52,6 +52,13 @@ var TeamListController = class {
                 </div>
             );
         }
+    },
+    //create directive to wrap React component in
+    TeamListDirective = function (reactDirective) {
+       return reactDirective(TeamList, undefined, {
+           controller: TeamListController, 
+           controllerAs: 'scope'
+       });
     };
 //inject services and resources into controller
 TeamListController.$inject = ['GetTeams', 'GetMatches', '$location', '$scope'];
@@ -59,5 +66,5 @@ TeamListController.$inject = ['GetTeams', 'GetMatches', '$location', '$scope'];
 TeamList.propTypes = {
     t: React.PropTypes.object
 };
-//export component and controller
-export { TeamListController, TeamList };
+//export TeamList directive
+export { TeamListDirective };
