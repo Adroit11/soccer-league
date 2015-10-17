@@ -13,12 +13,18 @@ var TeamLogo = class extends React.Component {
         //pass props to parent constructor
         super(props);
         //create img src
-        this.imgSrc = "http://lorempixel.com/200/200/animals?" + props.teamId;
+        this.imgAttrs = {
+            src: "http://lorempixel.com/200/200/animals?" + props.teamId
+        };
+        //if it is supposed to be a circle
+        if (props.circle) {
+            this.imgAttrs.className="img-circle";
+        }
     }
     
     render () {
         return (
-            <img src={this.imgSrc} />
+            <img {...this.imgAttrs} />
         );
     }
 };
