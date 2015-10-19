@@ -5,6 +5,7 @@
   "dependencies": {
     "angular": "^1.4.7",
     "angular-route": "^1.4.7",
+    "moment": "^2.10.6",
     "ngreact": "^0.1.7-1.0.3112781",
     "react": "^0.14.0",
     "react-dom": "^0.14.0"
