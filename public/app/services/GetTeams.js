@@ -176,9 +176,8 @@ var GetTeams = class {
         }).then(function (teamId) {
             //VALID
             //we have a valid teamID, return the team
-            //FOR SOME REASON THIS SCRIPT ISN'T BEING BUNDLED!!!
             return this._teams[teamId];
-        }, function (errVal) {
+        }.bind(this), function (errVal) {
             //INVALID
             return (typeof errVal == "number") ? "INVALID_ID" : errVal;
         });
