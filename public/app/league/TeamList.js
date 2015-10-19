@@ -21,7 +21,7 @@ var TeamListController = class {
             this.rankedTeams = [];
             GetTeams.all().then(function (teams) {
                 //SUCCESS
-                //loop reams
+                //loop teams
                 for (var id in teams) {
                     //set teamId
                     teams[id].teamId = id;
