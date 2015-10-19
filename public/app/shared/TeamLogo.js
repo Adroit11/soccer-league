@@ -9,22 +9,17 @@
 import React from 'react';
 //create TeamLogo react component
 var TeamLogo = class extends React.Component {
-    constructor (props) {
-        //pass props to parent constructor
-        super(props);
+    render () {
         //create img src
-        this.imgAttrs = {
-            src: "http://lorempixel.com/200/200/animals?" + props.teamId
+        var imgAttrs = {
+            src: this.props.url + "?" + this.props.teamId
         };
         //if it is supposed to be a circle
-        if (props.circle) {
-            this.imgAttrs.className="img-circle";
+        if (this.props.circle) {
+            imgAttrs.className="img-circle";
         }
-    }
-    
-    render () {
         return (
-            <img {...this.imgAttrs} />
+            <img {...imgAttrs} />
         );
     }
 };
