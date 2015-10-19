@@ -28,7 +28,7 @@ var TeamEntry = class extends React.Component {
         return (
             <div onClick={this.handleClick.bind(this)} className="row">
                 <div className="col-xs-2 col-sm-1">
-                    <TeamLogo teamId={this.props.teamId} />
+                    <TeamLogo teamId={this.props.teamId} url={this.props.logoUrl} />
                 </div>
                 <div className="col-xs-7 col-sm-8">
                     <a href={teamHref}>
