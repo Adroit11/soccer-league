@@ -158,6 +158,10 @@ body {
     margin-top: -3px;
 }
 
+.team-player-view .content .row small {
+    font-size: .8em;
+}
+
 @media (max-width: 992px) {
     .team-player-view { max-width: 768px; }
 }
