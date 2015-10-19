@@ -116,6 +116,74 @@ var GetTeams = class {
             return errVal;
         });
     }
+    
+    //get all players from a specific team
+    _teamPlayers (teamId) {
+        //create and return promise to validate teamId
+        return this._$q(function (resolve, reject) {
+            //validate teamId
+            var vTeamId = parseInt(teamId);
+            (vTeamId > 0) ? resolve(vTeamId) : reject(teamId);
+        }).then(function (teamId) {
+            //VALID
+            //create GET request and return promise
+            return this._$http({
+                method: 'GET',
+                url: this._apiRoot + '/teams/' + teamId  + '/players'
+            });
+        }.bind(this), function (teamId) {
+            //INVALID
+            return "INVALID_INT";
+        }).then(function (response) {
+            //SUCCESS
+            //store players by id
+            var players = {}, curPlayer;
+            //loop the data
+            for (var i=0; i<response.data.length; i++) {
+                //store player by id
+                curPlayer = response.data[i];
+                players[curPlayer.id] = curPlayer;
+            }
+            //return players
+            return players;
+        }, function (response) {
+            //ERROR
+            return (typeof response == "string") ? response : null;
+        });
+    }
+    
+    //get all the players from a specific team
+    // -> teamId (int) The id for the team
+    // -> returns Angular promise
+    players (teamId) {
+        return this._teamPlayers(teamId);
+    }
+    
+    //get a single team from our saved collection of teams
+    // -> teamId (int) The id for the team
+    // -> returns Angular promise
+    single (teamId) {
+        //get all teams, return promise
+        return this.all().then(function (teams) {
+            //SUCCESS
+            //determine whether we have the requested team and return promise
+            return this._$q(function (resolve, reject) {
+                (teamId in teams) ? resolve(teamId) : reject(teamId);
+            });
+        }.bind(this), function (errVal) {
+            //ERROR
+            return errVal;
+        }).then(function (teamId) {
+            //VALID
+            //we have a valid teamID, return the team
+            //FOR SOME REASON THIS SCRIPT ISN'T BEING BUNDLED!!!
+            return this._teams[teamId];
+        }, function (errVal) {
+            //INVALID
+            return (typeof errVal == "number") ? "INVALID_ID" : errVal;
+        });
+    }
+        
 };
 //inject resources, contants, and services into service
 GetTeams.$inject = ['$http', '$q', 'API_ROOT', 'GetMatches'];
