@@ -25,7 +25,7 @@ var GoalEntry = class extends React.Component {
                         <MatchMinute minute={this.props.matchMinute} />
                     </div>
                     <div className="col-xs-6 col-sm-4">
-                        <a href={playerHref}>
+                        <a className="link" href={playerHref}>
                             {this.props.playerName}
                         </a>
                     </div>

@@ -26,7 +26,7 @@ var TeamEntry = class extends React.Component {
     render () {
         var teamHref = '#' + this.teamPath;
         return (
-            <div onClick={this.handleClick.bind(this)} className="row">
+            <div onClick={this.handleClick.bind(this)} className="row link">
                 <div className="col-xs-2 col-sm-1">
                     <TeamLogo teamId={this.props.teamId} url={this.props.logoUrl} />
                 </div>

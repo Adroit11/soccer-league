@@ -31,7 +31,7 @@ var MatchEntry = class extends React.Component {
         var matchHref = '#' + this.matchPath;
         return (
             <div className="game-row">
-                <div onClick={this.handleClick.bind(this)} className="row game-info">
+                <div onClick={this.handleClick.bind(this)} className="row game-info link">
                     <div className="col-xs-5 col-sm-4">
                         <a href={matchHref}>
                             <DateTime timestamp={this.props.match.timestamp} />

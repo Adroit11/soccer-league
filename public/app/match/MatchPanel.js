@@ -31,8 +31,8 @@ var MatchPanel = class extends React.Component {
                 <TeamLogo circle="true" teamId={this.props.teams[t1].teamId} url={this.props.teams[t1].logoUrl} />
             ],
             teamNames = [
-                <a href={teamHrefs[0]}>{this.props.teams[t0].name}</a>,
-                <a href={teamHrefs[1]}>{this.props.teams[t1].name}</a>
+                <a className="link" href={teamHrefs[0]}>{this.props.teams[t0].name}</a>,
+                <a className="link" href={teamHrefs[1]}>{this.props.teams[t1].name}</a>
             ],    
             matchDate = <DateTime format="single" timestamp={this.props.match.timestamp} />,
             matchScore = <MatchScore teamId={this.props.teams[t0].teamId} match={this.props.match} />

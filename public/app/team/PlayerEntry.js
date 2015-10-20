@@ -28,7 +28,7 @@ var PlayerEntry = class extends React.Component {
     render () {
         var playerHref = '#' + this.playerPath;
         return (
-            <div onClick={this.handleClick.bind(this)} className="row">
+            <div onClick={this.handleClick.bind(this)} className="row link">
                 <div className="col-xs-1 col-sm-1">
                     <img src={this.props.avatarUrl} />
                 </div>

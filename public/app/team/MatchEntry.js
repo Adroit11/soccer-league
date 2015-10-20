@@ -35,7 +35,7 @@ var MatchEntry = class extends React.Component {
             teamLogo = '';
         }
         return (
-            <div onClick={this.handleClick.bind(this)} className="row">
+            <div onClick={this.handleClick.bind(this)} className="row link">
                 <div className="col-xs-6 col-sm-6">
                     <a href={matchHref}>
                         <DateTime timestamp={this.props.match.timestamp} />

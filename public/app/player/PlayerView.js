@@ -131,7 +131,7 @@ var PlayerController = class {
                     img: <img className="img-circle" src={this.props.t.player.avatarUrl} />,
                     headings: [
                         this.props.t.player.name,
-                        <span><a href={teamHref}>{this.props.t.player.teamName}</a> | {this.props.t.player.position}</span>,
+                        <span><a className="link" href={teamHref}>{this.props.t.player.teamName}</a> | {this.props.t.player.position}</span>,
                         <span><GoalCount numGoals={this.props.t.numGoals} /> Scored</span>
                     ]
                 };
