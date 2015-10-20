@@ -28,7 +28,7 @@ var MatchList = class extends React.Component {
             );
         }
     };
-//define prop types of TeamList componnet
+//define prop types of MatchList componnet
 MatchList.propTypes = {
     matches:    React.PropTypes.array,
     teamId:     React.PropTypes.number

@@ -1,5 +1,5 @@
 /* TeamView.js
- * Displays the team list
+ * Displays the team
  * Dependencies: React, TeamEntry
  * Author: Joshua Carter
  * Created: October 14, 2015

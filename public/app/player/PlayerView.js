@@ -1,5 +1,5 @@
 /* PlayerView.js
- * Displays the team list
+ * Displays the player
  * Dependencies: React, 
     - components: PanelView, MatchList, GoalCount
     - services: GetTeams, GetMatches, GetPlayers
