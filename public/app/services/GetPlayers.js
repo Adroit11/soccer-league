@@ -16,6 +16,35 @@ var GetPlayers = class {
         this._GetMatches = GetMatches;
     }
     
+    //get all players from server
+    _allPlayers () {
+        //create GET request and return promise
+        return this._allRequest = this._$http({
+            method: 'GET',
+            url: this._apiRoot + '/players'
+        }).then(function (response) {
+            //SUCCESS
+            //store players by id
+            var players = {};
+            //loop the data
+            for (var i=0; i<response.data.length; i++) {
+                //store player by id
+                players[response.data[i].id] = response.data[i];
+            }
+            return players; 
+        }.bind(this), function (response) {
+            //ERROR
+            return null;   
+        });
+    }
+    
+    //get all players
+    //returns a promise that resolves to players on success
+    all () {
+        //get players, return a promise
+        return this._allPlayers();
+    }
+    
     //get a single player from the server
     _singlePlayer (playerId) {
         //create and return promise to validate playerId
