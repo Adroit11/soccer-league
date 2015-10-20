@@ -68,7 +68,7 @@ var GetPlayers = class {
             return response.data;
         }, function (response) {
             //ERROR
-            return null;   
+            return (typeof response == "string") ? response : null;
         });
     }
     
