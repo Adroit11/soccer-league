@@ -17,6 +17,9 @@ var config = function ($routeProvider, $locationProvider) {
             .when('/player/:playerId', {
                 template: '<player-view t="scope"></player-view>'
             })
+            .when('/match/:matchId', {
+                template: '<match-view t="scope"></match-view>'
+            })
             .otherwise({
                 redirectTo: '/'
             });
