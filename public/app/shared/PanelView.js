@@ -1,5 +1,5 @@
 /* PanelView.js
- * Displays the panel container
+ * Displays the panel
  * Dependencies: React
  * Author: Joshua Carter
  * Created: October 16, 2015
@@ -8,14 +8,15 @@
 //include modules
 import React from 'react';
 //include components
+import { PanelContainer } from './PanelContainer.js';
+import { PanelContent } from './PanelContent.js';
 import { PanelH3 } from './PanelH3.js';
 import { PanelH3Small } from './PanelH3Small.js';
-import { PanelContent } from './PanelContent.js';
 //create PanelView react component
 var PanelView = class extends React.Component {
     render () {
         return (
-            <div id={this.props.id} className="team-player-view container-fluid panel center-block">
+            <PanelContainer id={this.props.id}>
                 <div className="top">
                     <div className="img">
                         {this.props.top.img}
@@ -29,7 +30,7 @@ var PanelView = class extends React.Component {
                 <PanelContent id={this.props.contentId}>
                     {this.props.children}
                 </PanelContent>
-            </div>
+            </PanelContainer>
         );
     }
 };
