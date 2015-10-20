@@ -135,6 +135,7 @@ body {
 
 /* Team and Player Views */
 .team-player-view {
+    background: rgba(255, 255, 255, .95);
     margin-top: 20px;
     padding: 10px;
     max-width: 992px;
@@ -172,7 +173,7 @@ body {
 }
 
 .team-player-view .content {
-    color: #bbb;
+    color: #b0b0b0;
     font-size: 1.4em;
     padding-top: 20px;
 }
@@ -223,6 +224,9 @@ body {
 }
 
 #player-view .game-goals {
+    background-color: #eee;
+    border-color: #e1e1e1;
+    box-shadow: 1px 1px 3px 1px #ccc inset;
     color: #000;
     font-size: .7em; 
     font-weight: bold;
