@@ -21,7 +21,7 @@ var MatchPanel = class extends React.Component {
         //create team keys
         var tKeys = Object.keys(this.props.teams),
             t0 = tKeys[0],
-            t1 = tKeys[1],
+            t1 = (tKeys[1]) ? tKeys[1] : tKeys[0],
             teamHrefs = [
                 '#/team/' + this.props.teams[t0].teamId,
                 '#/team/' + this.props.teams[t1].teamId

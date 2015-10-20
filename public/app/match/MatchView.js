@@ -67,11 +67,6 @@ var MatchController = class {
                     //store
                     this.teams[teams[i].teamId] = teams[i];
                 }
-                //if we only have one team
-                if (this.teams.length == 1) {
-                    //then add the first team as a duplicate
-                    this.teams[1] = this.teams[0];
-                }
             }.bind(this), function (errVal) {
                 //ERROR
             });
@@ -111,7 +106,7 @@ var MatchController = class {
     MatchView = class extends React.Component {
         render () {
             //if our match has been loaded
-            if (this.props.t.match.id == this.props.t.matchId && Object.keys(this.props.t.teams).length == 2) {
+            if (this.props.t.match.id == this.props.t.matchId && Object.keys(this.props.t.teams).length > 0) {
                 //display the team panel
                 return (
                     <MatchPanel match={this.props.t.match} teams={this.props.t.teams}>
