@@ -30,12 +30,12 @@ var TeamEntry = class extends React.Component {
                 <div className="col-xs-2 col-sm-1">
                     <TeamLogo teamId={this.props.teamId} url={this.props.logoUrl} />
                 </div>
-                <div className="col-xs-6 col-sm-8">
+                <div className="col-xs-7 col-sm-8">
                     <a href={teamHref}>
                         {this.props.name}
                     </a>
                 </div>
-                <div className="col-xs-4 col-sm-3 text-right">
+                <div className="col-xs-3 col-sm-3 text-right">
                     <TeamStats {...this.props.stats} />
                 </div>
             </div>
