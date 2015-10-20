@@ -88,6 +88,64 @@ var GetMatches = class {
         //else, get them now, return a promise
         return this._allMatches();
     }
+    
+    //get a single match from our saved collection of matches
+    // -> matchId (int) The id for the match
+    // -> returns Angular promise
+    single (matchId) {
+        //get all matches, return promise
+        return this.all().then(function (matches) {
+            //SUCCESS
+            //determine whether we have the requested match and return promise
+            return this._$q(function (resolve, reject) {
+                (matchId in matches.byId) ? resolve(matchId) : reject(matchId);
+            });
+        }.bind(this), function (errVal) {
+            //ERROR
+            return errVal;
+        }).then(function (matchId) {
+            //VALID
+            //we have a valid matchId, return the team
+            return this._matches[matchId];
+        }.bind(this), function (errVal) {
+            //INVALID
+            return (typeof errVal == "number") ? "INVALID_ID" : errVal;
+        });
+    }
+    
+    //get goals for a match from the server
+    _matchGoals (matchId) {
+        //create and return promise to validate matchId
+        return this._$q(function (resolve, reject) {
+            //validate matchId
+            var vMatchId = parseInt(matchId);
+            (vMatchId > 0) ? resolve(vMatchId) : reject(matchId);
+        }).then(function (matchId) {
+            //VALID
+            //create GET request and return promise
+            return this._$http({
+                method: 'GET',
+                url: this._apiRoot + '/matches/' + matchId  + '/goals'
+            });
+        }.bind(this), function (teamId) {
+            //INVALID
+            return "INVALID_INT";
+        }).then(function (response) {
+            //SUCCESS
+            //data should be good to go
+            return response.data;
+        }, function (response) {
+            //ERROR
+            return (typeof response == "string") ? response : null;
+        });
+    }
+    
+    //get goals for a single match from the server
+    // -> matchId (int) The id of the match
+    // -> returns Angular promise
+    goals (matchId) {
+        return this._matchGoals(matchId);
+    }
 };
 //inject resources and contants into service
 GetMatches.$inject = ['$http', '$q', 'API_ROOT'];
