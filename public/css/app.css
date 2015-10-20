@@ -204,6 +204,7 @@ body {
     #player-view .game-info, #player-view .game-goals { font-size: .9em; }
     #player-view .game-info { padding-left: 15px; } 
     #player-view .game-info > div { padding: 2px; }
+    #player-view .game-info > div.score { padding-left: 15px; }
     #player-view .game-goals, #player-view .game-goals .goal { padding-right: 0px; padding-left: 0px; }
 }
 
