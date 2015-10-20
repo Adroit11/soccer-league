@@ -213,19 +213,29 @@ body {
 #game-view .top h2 {
     font-size: 1.9em;
     overflow: hidden;
-    padding-top: 10px;
+    padding-top: 15px;
     width: 100%;
 }
 
-#game-view .top h2 .center-block {
-    padding-top: 3px;
-    width: 25px;
-    height: 37px;
+#game-view .top h2 img {
+    margin-top: -15px;
+    width: 50px;
 }
 
-#game-view .top h2 img {
-    margin-top: -10px;
-    width: 50px;
+#game-view .top h2 > span {
+    padding: 0;
+}
+
+#game-view .top h2 span.text-center {
+    margin: 0 -4.16666%;
+}
+
+#game-view .top h2 .text-left img {
+    margin-right: 10px;
+}
+
+#game-view .top h2 .text-right img {
+    margin-left: 10px;
 }
 
 #game-view .top .visible-xs-block h2 {
@@ -239,6 +249,7 @@ body {
 }
 
 @media (max-width: 768px) {
+    #game-view .top.container-fluid { padding: 0; }
     #game-view .content .goal img { margin-top: 5px; }
 }
 
