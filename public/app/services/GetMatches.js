@@ -15,6 +15,8 @@ var GetMatches = class {
         //store matches after they are first retrieved
         this._matches = false;
         this._matchesByTeam = false;
+        //store a match request in progress
+        this._allRequest = false;
     }
     
     //return matches and matchesByTeam together
@@ -28,7 +30,7 @@ var GetMatches = class {
     //get all matches from server
     _allMatches () {
         //create GET request and return promise
-        return this._$http({
+        return this._allRequest = this._$http({
             method: 'GET',
             url: this._apiRoot + '/matches'
         }).then(function (response) {
@@ -62,12 +64,20 @@ var GetMatches = class {
         }.bind(this), function (response) {
             //ERROR
             return null;   
-        });
+        }).finally(function () {
+            //remove this saved promise
+            this._allRequest = false;
+        }.bind(this));
     }
     
     //get all matches, response is 'cached'
     //returns a promise that resolves to matches on success
     all () {
+        //if there is a request for all matches in progress
+        if (this._allRequest) {
+            //then return the unresolved promise
+            return this._allRequest;
+        }
         //if we've already retrieved and processed the matches
         if (this._matches && this._matchesByTeam) {
             //return them as a promise

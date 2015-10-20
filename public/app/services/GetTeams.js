@@ -17,12 +17,14 @@ var GetTeams = class {
         //private properties that define instance
         //store teams after they are first retrieved
         this._teams = false;
+        //store a team request in progress
+        this._allRequest = false;
     }
     
     //get all teams from server
     _allTeams () {
         //create GET request and return promise
-        return this._$http({
+        return this._allRequest = this._$http({
             method: 'GET',
             url: this._apiRoot + '/teams'
         }).then(function (response) {
@@ -40,13 +42,21 @@ var GetTeams = class {
         }.bind(this), function (response) {
             //ERROR
             return null;   
-        });
+        }).finally(function () {
+            //remove this saved promise
+            this._allRequest = false;
+        }.bind(this));
     }
     
     //get all teams along with their wins/losses and ranking score, response is 'cached'
     //returns a promise that resolves to teams on success
     all () {
         var mData, tData, sortedTeams;
+        //if there is a request for all matches in progress
+        if (this._allRequest) {
+            //then return the unresolved promise
+            return this._allRequest;
+        }
         //if we've already retrieved and processed the teams
         if (this._teams) {
             //return them as a promise
