@@ -128,7 +128,7 @@ var TeamController = class {
             if (this.props.t.team.id == this.props.t.teamId) {
                 //display the team panel
                 return (
-                    <PanelView top={panelTop} contentId="team-view">
+                    <PanelView id="team-view" top={panelTop} contentId="team-view-content">
                         <PlayerList nav={this.props.t.nav} players={this.props.t.players} />
                         <MatchList nav={this.props.t.nav} teamId={this.props.t.teamId} matches={this.props.t.matches} />
                     </PanelView>
