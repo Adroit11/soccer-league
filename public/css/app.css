@@ -251,6 +251,7 @@ body {
 @media (max-width: 768px) {
     #game-view .top.container-fluid { padding: 0; }
     #game-view .content .goal img { margin-top: 5px; }
+    #game-view .content .goal .col-xs-2 { padding-bottom: 20px; }
 }
 
 
