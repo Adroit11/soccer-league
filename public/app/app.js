@@ -18,6 +18,7 @@ import ngReact from 'ngreact';
 import { TeamListDirective } from './league/TeamList.js';
 import { TeamDirective } from './team/TeamView.js';
 import { PlayerDirective } from './player/PlayerView.js';
+import { MatchDirective } from './match/MatchView.js';
 //include services
 import { GetTeams } from './services/GetTeams.js';
 import { GetMatches } from './services/GetMatches.js';
@@ -36,4 +37,5 @@ var app = angular.module('GGSoccer', ['react', 'ngRoute'])
     //wrap React components in Angular directives
     .directive("teamList", TeamListDirective)
     .directive("teamView", TeamDirective)
-    .directive("playerView", PlayerDirective);
+    .directive("playerView", PlayerDirective)
+    .directive("matchView", MatchDirective);
