@@ -9,7 +9,6 @@
 import React from 'react';
 //include components
 import { PanelView } from '../shared/PanelView.js';
-import { PanelContent} from '../shared/PanelContent.js';
 import { PlayerList } from './PlayerList.js';
 import { MatchList } from './MatchList.js';
 import { TeamLogo } from '../shared/TeamLogo.js';
