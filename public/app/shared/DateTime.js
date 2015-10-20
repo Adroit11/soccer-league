@@ -12,11 +12,17 @@ import moment from 'moment';
 var DateTime = class extends React.Component {
     render () {
         //create date
-        var date = moment(this.props.timestamp);
+        var date = moment(this.props.timestamp), formats;
         //subtract hours to set PST time
         date.utcOffset(-480);
+        //create formats
+        formats = {
+            match: <span>{date.format("MMM. D, ")}<small>{date.format("HH:mm ")}PST</small></span>,
+            single: <span>{date.format("MMM. D, YYYY, HH:mm ")}PST</span>
+        };
+        
         return (
-            <span>{date.format("MMM. D, ")}<small>{date.format("HH:mm ")}PST</small></span>
+            <span>{formats[this.props.format] || formats["match"]}</span>
         );
     }
 };
