@@ -14,6 +14,9 @@ var config = function ($routeProvider, $locationProvider) {
             .when('/team/:teamId', {
                 template: '<team-view t="scope"></team-view>'
             })
+            .when('/player/:playerId', {
+                template: '<player-view t="scope"></player-view>'
+            })
             .otherwise({
                 redirectTo: '/'
             });
