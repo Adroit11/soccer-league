@@ -135,5 +135,7 @@ MatchController.$inject = ['$routeParams', 'GetTeams', 'GetMatches', 'GetPlayers
 MatchView.propTypes = {
     t: React.PropTypes.object
 };
+//inject resources into directive
+MatchDirective.$inject = ['reactDirective'];
 //export MatchView directive
 export { MatchDirective };

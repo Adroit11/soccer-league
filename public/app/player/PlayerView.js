@@ -162,7 +162,7 @@ var PlayerController = class {
             }
         }
     },
-    PlayerDirective = function (reactDirective, $compile) {
+    PlayerDirective = function (reactDirective) {
         return reactDirective(PlayerView, undefined, {
             controller: PlayerController,
             controllerAs: 'scope'
@@ -174,5 +174,7 @@ PlayerController.$inject = ['$location', '$scope', '$routeParams', 'GetTeams', '
 PlayerView.propTypes = {
     t: React.PropTypes.object
 };
+//inject resources into directive
+PlayerDirective.$inject = ['reactDirective'];
 //export PlayerView directive
 export { PlayerDirective };

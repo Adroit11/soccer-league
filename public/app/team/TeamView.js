@@ -158,7 +158,7 @@ var TeamController = class {
             }
         }
     },
-    TeamDirective = function (reactDirective, $compile) {
+    TeamDirective = function (reactDirective) {
         return reactDirective(TeamView, undefined, {
             controller: TeamController,
             controllerAs: 'scope'
@@ -170,5 +170,7 @@ TeamController.$inject = ['$location', '$scope', '$routeParams', 'GetTeams', 'Ge
 TeamView.propTypes = {
     t: React.PropTypes.object
 };
+//inject resources into directive
+TeamDirective.$inject = ['reactDirective'];
 //export TeamView directive
 export { TeamDirective };

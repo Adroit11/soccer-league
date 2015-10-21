@@ -69,5 +69,7 @@ TeamListController.$inject = ['GetTeams', 'GetMatches', '$location', '$scope'];
 TeamList.propTypes = {
     t: React.PropTypes.object
 };
+//inject resources into directive
+TeamListDirective.$inject = ['reactDirective'];
 //export TeamList directive
 export { TeamListDirective };
