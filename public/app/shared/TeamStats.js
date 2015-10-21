@@ -1,5 +1,5 @@
 /* TeamStats.js
- * Displays the team logo
+ * Displays the wins/losses for a team
  * Dependencies: React
  * Author: Joshua Carter
  * Created: October 15, 2015
