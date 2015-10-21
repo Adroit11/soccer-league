@@ -7,11 +7,6 @@
 "use strict";
 //include modules
 import React from 'react';
-//include components
-import { DateTime } from '../shared/DateTime.js';
-import { MatchResult } from '../shared/MatchResult.js';
-import { TeamLogo } from '../shared/TeamLogo.js';
-import { MatchScore } from '../shared/MatchScore.js';
 //create PlayerEntry React component
 var PlayerEntry = class extends React.Component {
     constructor (props) {
