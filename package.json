@@ -12,7 +12,8 @@
   },
   "devDependencies": {
     "babelify": "^6.3.0",
-    "browserify": "^11.2.0"
+    "browserify": "^11.2.0",
+    "yuicompressor": "^2.4.8"
   },
   "scripts": {
     "build": "browserify -t babelify public/app/app.js -o public/js/bundle.js"
