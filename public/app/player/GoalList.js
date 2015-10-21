@@ -1,6 +1,6 @@
 /* GoalList.js
  * Displays a match goal list
- * Dependencies: React, TeamEntry
+ * Dependencies: React, GoalEntry component
  * Author: Joshua Carter
  * Created: October 19, 2015
  */

@@ -1,6 +1,6 @@
 /* GoalEntry.js
  * Displays a single entry in the goals list
- * Dependencies: React
+ * Dependencies: React, MatchMinute, GoalDistance components
  * Author: Joshua Carter
  * Created: October 19, 2015
  */

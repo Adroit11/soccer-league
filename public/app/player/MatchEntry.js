@@ -1,6 +1,6 @@
 /* MatchEntry.js
  * Displays a single entry in the match goals list
- * Dependencies: React
+ * Dependencies: React, DateTime, MatchResult, TeamLogo, MatchScore, GoalCount, GoalList components
  * Author: Joshua Carter
  * Created: October 19, 2015
  */

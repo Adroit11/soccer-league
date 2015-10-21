@@ -1,6 +1,6 @@
 /* MatchList.js
  * Displays the player match list
- * Dependencies: React, MatchEntry, PanelH4
+ * Dependencies: React, MatchEntry, PanelH4 components
  * Author: Joshua Carter
  * Created: October 19, 2015
  */
