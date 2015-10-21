@@ -43,9 +43,9 @@ var MatchController = class {
                 winnerTeamId: 0,
                 wasTie: false
             };
-            //then get match teams info
+            //then get match teams info, save request
             this.teams = {};
-            GetMatches.single(this.matchId).then(function (match) {
+            requestMatchTeams = GetMatches.single(this.matchId).then(function (match) {
                 //SUCCESS
                 var requestTeams = [];
                 //store match
@@ -56,7 +56,7 @@ var MatchController = class {
                     requestTeams.push(GetTeams.single(match.teamIds[i]));
                 }
                 //return promise of all team requests
-                return requestMatchTeams = $q.all(requestTeams);
+                return $q.all(requestTeams);
             }.bind(this), function (errVal) {
                 //ERROR
             }).then(function (teams) {
@@ -73,30 +73,30 @@ var MatchController = class {
             
             //get match goals
             this.goals = [];
-            GetMatches.goals(this.matchId).then(function (goals) {
+            //when we have goals, players, and matches
+             $q.all([
+                GetMatches.goals(this.matchId),
+                requestPlayers,
+                requestMatchTeams
+            ]).then(function (responses) {
                 //SUCCESS
-                //when we have players
-                $q.when(requestPlayers, function () {
-                    //when we have teams
-                    $q.when(requestMatchTeams, function () {
-                        //SUCCESS
-                        //loop goals
-                        for (var i=0; i<goals.length; i++) {
-                            //store goal id
-                            goals[i].goalId = goals[i].id;
-                            //store player name
-                            goals[i].playerName = this.players[goals[i].playerId].name;
-                            //store team logo
-                            goals[i].logoUrl = this.teams[goals[i].teamId].logoUrl;
-                            //save goal
-                            this.goals.push(goals[i]);
-                        }
-                        //sort goals by match minute
-                        this.goals.sort(function (a, b) {
-                            return a.matchMinute - b.matchMinute;
-                        });
-                    }.bind (this));
-                }.bind(this));
+                //get goals
+                var goals = responses[0];
+                //loop goals
+                for (var i=0; i<goals.length; i++) {
+                    //store goal id
+                    goals[i].goalId = goals[i].id;
+                    //store player name
+                    goals[i].playerName = this.players[goals[i].playerId].name;
+                    //store team logo
+                    goals[i].logoUrl = this.teams[goals[i].teamId].logoUrl;
+                    //save goal
+                    this.goals.push(goals[i]);
+                }
+                //sort goals by match minute
+                this.goals.sort(function (a, b) {
+                    return a.matchMinute - b.matchMinute;
+                });
             }.bind(this), function (errVal) {
                 //ERROR
             });
