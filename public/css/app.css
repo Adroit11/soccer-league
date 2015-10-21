@@ -1,6 +1,7 @@
 @charset "utf-8";
 /* App CSS Document */
 
+/* PART 1: Main Template */
 html, body {
 	margin: 0;
 	padding: 0;
@@ -35,6 +36,7 @@ footer {
 }
 
 
+/* PART 2: Common styles */
 body {
     color: #fff;
 }
@@ -68,8 +70,7 @@ a, a:hover, a:focus {
 }
 
 
-
-/* Responsive background image */
+/* PART 3: Responsive background image */
 body {
     background-image: url(../img/background-1920.jpg);
     background-position: left bottom;
@@ -101,7 +102,7 @@ body {
 }
 
 
-/* Team list */
+/* PART 4: Team list */
 #team-list {
     font-size: 2em;
     margin-top: 40px;
@@ -133,7 +134,7 @@ body {
 }
 
 
-/* Team and Player Views */
+/* PART 5: Common styles for Team, Player, and Match Views */
 .team-player-view {
     background: rgba(255, 255, 255, .95);
     margin-top: 20px;
@@ -216,13 +217,13 @@ body {
 }
 
 
-/* Team View */
+/* PART 6: Team View */
 @media (max-width: 768px) {
     #team-games { margin-top: 30px; }   
 }
 
 
-/* Player View */
+/* PART 7: Player View */
 #player-view .game-info, #player-view .game-goals {
     overflow: hidden;
 }
@@ -254,7 +255,7 @@ body {
 }
 
 
-/* Game View */
+/* Part 7: Game View */
 #game-view .top h2 {
     font-size: 1.9em;
     overflow: hidden;
@@ -299,5 +300,3 @@ body {
     #game-view .content .goal img { margin-top: 5px; }
     #game-view .content .goal .col-xs-2 { padding-bottom: 20px; }
 }
-
-
