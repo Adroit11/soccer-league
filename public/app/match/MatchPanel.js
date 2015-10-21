@@ -1,6 +1,6 @@
 /* MatchPanel.js
- * Displays the panel
- * Dependencies: React
+ * Displays the match panel
+ * Dependencies: React, PanelContainer, PanelContent, TeamLogo, PanelH3, PanelH3Small, DateTime, MatchScore components
  * Author: Joshua Carter
  * Created: October 16, 2015
  */

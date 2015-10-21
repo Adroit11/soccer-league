@@ -1,5 +1,5 @@
 /* GoalList.js
- * Displays the player match list
+ * Displays the match goal list
  * Dependencies: React, MatchEntry, PanelH4
  * Author: Joshua Carter
  * Created: October 19, 2015
