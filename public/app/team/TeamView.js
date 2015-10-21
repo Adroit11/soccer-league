@@ -107,12 +107,12 @@ var TeamController = class {
             }).then(function (teams) {
                 //SUCCESS
                 //if we have matches
-                if (this.matches.length > 0) {
+                if (Object.keys(this.matches).length > 0) {
                     //loop matches
                     for (var y in this.matches) {
                         for (var i=0; i<this.matches[y].length; i++) {
                             //add opponent info to match
-                            this.matches[i].opponent.logo = teams[this.matches[i].opponent.teamId].logoUrl;
+                            this.matches[y][i].opponent.logo = teams[this.matches[y][i].opponent.teamId].logoUrl;
                         }
                     }
                 }   //else do nothing
