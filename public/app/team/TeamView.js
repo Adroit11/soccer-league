@@ -1,6 +1,9 @@
 /* TeamView.js
  * Displays the team
- * Dependencies: React, TeamEntry
+ * Dependencies: React, 
+    - components: PanelView, PlayerList, MatchList, TeamLogo, TeamRank, TeamStats,
+    - resources: $location, $scope, $routeParams, $q
+    - services: GetTeams, GetMatches
  * Author: Joshua Carter
  * Created: October 14, 2015
  */

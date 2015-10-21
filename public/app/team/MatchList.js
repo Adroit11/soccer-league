@@ -1,6 +1,6 @@
 /* MatchList.js
  * Displays the team match list
- * Dependencies: React, MatchGroup
+ * Dependencies: React, MatchGroup, PanelH4 components
  * Author: Joshua Carter
  * Created: October 17, 2015
  */

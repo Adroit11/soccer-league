@@ -1,6 +1,6 @@
 /* PlayerList.js
- * Displays the team match list
- * Dependencies: React, TeamEntry
+ * Displays the team player list
+ * Dependencies: React, PlayerEntry, PanelH4 components
  * Author: Joshua Carter
  * Created: October 18, 2015
  */

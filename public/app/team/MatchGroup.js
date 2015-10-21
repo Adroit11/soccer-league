@@ -1,6 +1,6 @@
 /* MatchGroup.js
  * Displays the team match group
- * Dependencies: React, MatchEntry
+ * Dependencies: React, MatchEntry, PanelH5 components
  * Author: Joshua Carter
  * Created: October 20, 2015
  */

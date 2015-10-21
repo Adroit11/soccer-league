@@ -1,6 +1,6 @@
 /* MatchEntry.js
  * Displays a single entry in the matches list
- * Dependencies: React
+ * Dependencies: React, DateTime, MatchResult, TeamLogo, MatchScore components
  * Author: Joshua Carter
  * Created: October 17, 2015
  */

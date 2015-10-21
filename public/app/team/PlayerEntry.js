@@ -1,5 +1,5 @@
 /* PlayerEntry.js
- * Displays a single entry in the matches list
+ * Displays a single entry in the players list
  * Dependencies: React
  * Author: Joshua Carter
  * Created: October 18, 2015
