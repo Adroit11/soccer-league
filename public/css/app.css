@@ -272,7 +272,8 @@ body {
 }
 
 #game-view .top h2 span.text-center {
-    margin: 0 -4.16666%;
+    margin-left: -4.16666%;
+    margin-right: -5%;
 }
 
 #game-view .top h2 .text-left img {
