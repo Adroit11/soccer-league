@@ -183,6 +183,10 @@ body {
     margin-bottom: 20px;
 }
 
+.team-player-view .content h5 {
+    color: #000;
+}
+
 .team-player-view .content .row {
     margin-bottom: 15px;
 }
@@ -194,6 +198,10 @@ body {
 
 .team-player-view .content .row small {
     font-size: .8em;
+}
+
+.team-player-view .match-year-group {
+    margin-bottom: 40px;
 }
 
 @media (max-width: 992px) {

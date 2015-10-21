@@ -8,17 +8,18 @@
 //include modules
 import React from 'react';
 //include components
-import { MatchEntry } from './MatchEntry.js';
+import { MatchGroup } from './MatchGroup.js';
 import { PanelH4 } from '../shared/PanelH4.js';
 //create MatchList React component
 var MatchList = class extends React.Component {
         render () {
             //loop matches and create entries
-            var matchNodes = this.props.matches.map(function (match) {
-                return (
-                    <MatchEntry nav={this.props.nav} key={match.matchId} teamId={this.props.teamId} match={match} />
+            var matchNodes = [];
+            for (var year in this.props.matches) {
+                matchNodes.push(
+                    <MatchGroup nav={this.props.nav} key={year} teamId={this.props.teamId} year={year} matches={this.props.matches[year]} />
                 );
-            }.bind(this));
+            };
             return (
                 <div id="player-game-goals">
                     <PanelH4 heading="Goals" />
@@ -30,7 +31,7 @@ var MatchList = class extends React.Component {
     };
 //define prop types of MatchList componnet
 MatchList.propTypes = {
-    matches:    React.PropTypes.array,
+    matches:    React.PropTypes.object,
     teamId:     React.PropTypes.number
 };
 //export directive

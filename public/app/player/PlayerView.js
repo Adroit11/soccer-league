@@ -56,7 +56,7 @@ var PlayerController = class {
                 avatarUrl: ""
             };
             //get player goals after we have player info
-            this.matchesGoals = [];
+            this.matchesGoals = {};
             //count goals
             this.numGoals = 0;
             requestPlayer = GetPlayers.single(this.playerId).then(function (player) {
@@ -72,7 +72,7 @@ var PlayerController = class {
                 //when we have matches and teams
                 $q.when(requestMatchesTeams, function () {
                     //SUCCESS
-                    var curMatch, curGoal;
+                    var curMatch, curGoal, curYear;
                     //loop goals by match
                     for (var matchId in goals) {
                         curMatch = this.matches[matchId];
@@ -102,14 +102,23 @@ var PlayerController = class {
                         curMatch.goals.sort(function (a, b) {
                             return a.matchMinute = b.matchMinute;
                         });
-                        //store the match at the beginning of the array 
-                        //(so we know the first value is our current match)
-                        this.matchesGoals.unshift(curMatch);
+                        //get the year of the match
+                        curYear = new Date(curMatch.timestamp).getUTCFullYear();
+                        //if year hasn't been initialized
+                        if (!(curYear in this.matchesGoals)) {
+                            //do so
+                            this.matchesGoals[curYear] = [];
+                        }
+                        //store the match
+                        this.matchesGoals[curYear].push(curMatch);
                     }
-                    //sort matches by timestamp
-                    this.matchesGoals.sort(function (a, b) {
-                        return a.timestamp = b.timestamp;
-                    });
+                    //loop stored matches
+                    for (var y in this.matchesGoals) {
+                        //sort matches by date
+                        this.matchesGoals[y].sort(function (a, b) {
+                            return a.timestamp - b.timestamp;
+                        });
+                    }
                     
                     //also, since at this point we know we have both the teams and the player
                     //store the player's team's name

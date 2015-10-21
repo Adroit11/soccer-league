@@ -60,11 +60,11 @@ var TeamController = class {
                 //ERROR
             });
                 
-            //get matches and sort by date
-            this.matches = [];
+            //get matches, store by year, and sort by date
+            this.matches = {};
             GetMatches.all().then(function (matches) {
                 //SUCCESS
-                var curId;
+                var curId, curYear;
                 //if we have matches for our team
                 if (matches.byTeam[this.teamId]) {
                     //loop matches by team
@@ -78,13 +78,23 @@ var TeamController = class {
                                 (matches.byId[curId].teamIds[0] != this.teamId) ? 0 : 1 
                             ]
                         };
+                        //get the year of the match
+                        curYear = new Date(matches.byId[curId].timestamp).getUTCFullYear();
+                        //if year hasn't been initialized
+                        if (!(curYear in this.matches)) {
+                            //do so
+                            this.matches[curYear] = [];
+                        }
                         //add to matches
-                        this.matches.push(matches.byId[curId]);  
+                        this.matches[curYear].push(matches.byId[curId]);  
                     }
-                    //sort matches by date
-                    this.matches.sort(function (a, b) {
-                        return a.timestamp - b.timestamp;
-                    });
+                    //loop stored matches
+                    for (var y in this.matches) {
+                        //sort matches by date
+                        this.matches[y].sort(function (a, b) {
+                            return a.timestamp - b.timestamp;
+                        });
+                    }
                     //get teams, return promise
                     return GetTeams.all();
                 }   //else, do nothing
@@ -99,9 +109,11 @@ var TeamController = class {
                 //if we have matches
                 if (this.matches.length > 0) {
                     //loop matches
-                    for (var id in this.matches) {
-                        //add opponent info to match
-                        this.matches[id].opponent.logo = teams[this.matches[id].opponent.teamId].logoUrl;
+                    for (var y in this.matches) {
+                        for (var i=0; i<this.matches[y].length; i++) {
+                            //add opponent info to match
+                            this.matches[i].opponent.logo = teams[this.matches[i].opponent.teamId].logoUrl;
+                        }
                     }
                 }   //else do nothing
             }.bind(this), function (errVal) {
