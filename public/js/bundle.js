@@ -52393,7 +52393,7 @@ var app = _angular2['default'].module('GGSoccer', ['react', 'ngRoute']).config([
 //wrap React components in Angular directives
 .directive("teamList", _leagueTeamListJs.TeamListDirective).directive("teamView", _teamTeamViewJs.TeamDirective).directive("playerView", _playerPlayerViewJs.PlayerDirective).directive("matchView", _matchMatchViewJs.MatchDirective);
 
-},{"./config.js":165,"./league/TeamList.js":167,"./match/MatchView.js":171,"./player/PlayerView.js":177,"./services/GetMatches.js":178,"./services/GetPlayers.js":179,"./services/GetTeams.js":180,"./team/TeamView.js":199,"angular":4,"angular-route":2,"ngreact":7,"react":163}],165:[function(require,module,exports){
+},{"./config.js":165,"./league/TeamList.js":167,"./match/MatchView.js":171,"./player/PlayerView.js":178,"./services/GetMatches.js":179,"./services/GetPlayers.js":180,"./services/GetTeams.js":181,"./team/TeamView.js":202,"angular":4,"angular-route":2,"ngreact":7,"react":163}],165:[function(require,module,exports){
 /* config.js
  * Creates config block for app and set's up routing; also creates other app-wide objects
  * Author: Joshua Carter
@@ -52424,7 +52424,7 @@ exports.config = config;
 },{}],166:[function(require,module,exports){
 /* TeamEntry.js
  * Displays a single entry in the team list
- * Dependencies: React, TeamLogo
+ * Dependencies: React, TeamLogo, TeamStats
  * Author: Joshua Carter
  * Created: October 14, 2015
  */
@@ -52478,7 +52478,7 @@ var TeamEntry = (function (_React$Component) {
             var teamHref = '#' + this.teamPath;
             return _react2['default'].createElement(
                 'div',
-                { onClick: this.handleClick.bind(this), className: 'row' },
+                { onClick: this.handleClick.bind(this), className: 'row link' },
                 _react2['default'].createElement(
                     'div',
                     { className: 'col-xs-2 col-sm-1' },
@@ -52486,7 +52486,7 @@ var TeamEntry = (function (_React$Component) {
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col-xs-6 col-sm-8' },
+                    { className: 'col-xs-7 col-sm-8' },
                     _react2['default'].createElement(
                         'a',
                         { href: teamHref },
@@ -52495,7 +52495,7 @@ var TeamEntry = (function (_React$Component) {
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col-xs-4 col-sm-3 text-right' },
+                    { className: 'col-xs-3 col-sm-3 text-right' },
                     _react2['default'].createElement(_sharedTeamStatsJs.TeamStats, this.props.stats)
                 )
             );
@@ -52513,10 +52513,13 @@ TeamEntry.propTypes = {
 //export team entry componenet
 exports.TeamEntry = TeamEntry;
 
-},{"../shared/TeamLogo.js":192,"../shared/TeamStats.js":193,"react":163}],167:[function(require,module,exports){
+},{"../shared/TeamLogo.js":194,"../shared/TeamStats.js":195,"react":163}],167:[function(require,module,exports){
 /* TeamList.js
  * Displays the team list
- * Dependencies: React, TeamEntry
+ * Dependencies: React, 
+    - components: TeamEntry,
+    - services: GetTeams, GetMatches,
+    - resources: $location, $scope
  * Author: Joshua Carter
  * Created: October 14, 2015
  */
@@ -52616,6 +52619,8 @@ TeamListController.$inject = ['GetTeams', 'GetMatches', '$location', '$scope'];
 TeamList.propTypes = {
     t: _react2['default'].PropTypes.object
 };
+//inject resources into directive
+TeamListDirective.$inject = ['reactDirective'];
 //export TeamList directive
 exports.TeamListDirective = TeamListDirective;
 
@@ -52689,7 +52694,7 @@ var GoalEntry = (function (_React$Component) {
                         { className: 'col-xs-6 col-sm-4' },
                         _react2['default'].createElement(
                             'a',
-                            { href: playerHref },
+                            { className: 'link', href: playerHref },
                             this.props.playerName
                         )
                     ),
@@ -52721,9 +52726,9 @@ GoalEntry.propTypes = {
 //export component
 exports.GoalEntry = GoalEntry;
 
-},{"../shared/GoalDistance.js":182,"../shared/MatchMinute.js":183,"../shared/TeamLogo.js":192,"react":163}],169:[function(require,module,exports){
+},{"../shared/GoalDistance.js":183,"../shared/MatchMinute.js":184,"../shared/TeamLogo.js":194,"react":163}],169:[function(require,module,exports){
 /* GoalList.js
- * Displays the player match list
+ * Displays the match goal list
  * Dependencies: React, MatchEntry, PanelH4
  * Author: Joshua Carter
  * Created: October 19, 2015
@@ -52791,10 +52796,10 @@ GoalList.propTypes = {
 //export directive
 exports.GoalList = GoalList;
 
-},{"../shared/PanelH4.js":190,"./GoalEntry.js":168,"react":163}],170:[function(require,module,exports){
+},{"../shared/PanelH4.js":191,"./GoalEntry.js":168,"react":163}],170:[function(require,module,exports){
 /* MatchPanel.js
- * Displays the panel
- * Dependencies: React
+ * Displays the match panel
+ * Dependencies: React, PanelContainer, PanelContent, TeamLogo, PanelH3, PanelH3Small, DateTime, MatchScore components
  * Author: Joshua Carter
  * Created: October 16, 2015
  */
@@ -52850,16 +52855,16 @@ var MatchPanel = (function (_React$Component) {
             //create team keys
             var tKeys = Object.keys(this.props.teams),
                 t0 = tKeys[0],
-                t1 = tKeys[1],
+                t1 = tKeys[1] ? tKeys[1] : tKeys[0],
                 teamHrefs = ['#/team/' + this.props.teams[t0].teamId, '#/team/' + this.props.teams[t1].teamId],
                 teamLogos = [_react2['default'].createElement(_sharedTeamLogoJs.TeamLogo, { circle: 'true', teamId: this.props.teams[t0].teamId, url: this.props.teams[t0].logoUrl }), _react2['default'].createElement(_sharedTeamLogoJs.TeamLogo, { circle: 'true', teamId: this.props.teams[t1].teamId, url: this.props.teams[t1].logoUrl })],
                 teamNames = [_react2['default'].createElement(
                 'a',
-                { href: teamHrefs[0] },
+                { className: 'link', href: teamHrefs[0] },
                 this.props.teams[t0].name
             ), _react2['default'].createElement(
                 'a',
-                { href: teamHrefs[1] },
+                { className: 'link', href: teamHrefs[1] },
                 this.props.teams[t1].name
             )],
                 matchDate = _react2['default'].createElement(_sharedDateTimeJs.DateTime, { format: 'single', timestamp: this.props.match.timestamp }),
@@ -52937,7 +52942,7 @@ MatchPanel.propTypes = {
 //export component
 exports.MatchPanel = MatchPanel;
 
-},{"../shared/DateTime.js":181,"../shared/MatchScore.js":185,"../shared/PanelContainer.js":186,"../shared/PanelContent.js":187,"../shared/PanelH3.js":188,"../shared/PanelH3Small.js":189,"../shared/TeamLogo.js":192,"react":163}],171:[function(require,module,exports){
+},{"../shared/DateTime.js":182,"../shared/MatchScore.js":186,"../shared/PanelContainer.js":187,"../shared/PanelContent.js":188,"../shared/PanelH3.js":189,"../shared/PanelH3Small.js":190,"../shared/TeamLogo.js":194,"react":163}],171:[function(require,module,exports){
 /* MatchView.js
  * Displays the match
  * Dependencies: React, 
@@ -53001,9 +53006,9 @@ var MatchController = function MatchController($routeParams, GetTeams, GetMatche
         winnerTeamId: 0,
         wasTie: false
     };
-    //then get match teams info
+    //then get match teams info, save request
     this.teams = {};
-    GetMatches.single(this.matchId).then((function (match) {
+    requestMatchTeams = GetMatches.single(this.matchId).then((function (match) {
         //SUCCESS
         var requestTeams = [];
         //store match
@@ -53014,7 +53019,7 @@ var MatchController = function MatchController($routeParams, GetTeams, GetMatche
             requestTeams.push(GetTeams.single(match.teamIds[i]));
         }
         //return promise of all team requests
-        return requestMatchTeams = $q.all(requestTeams);
+        return $q.all(requestTeams);
     }).bind(this), function (errVal) {
         //ERROR
     }).then((function (teams) {
@@ -53025,41 +53030,32 @@ var MatchController = function MatchController($routeParams, GetTeams, GetMatche
             //store
             this.teams[teams[i].teamId] = teams[i];
         }
-        //if we only have one team
-        if (this.teams.length == 1) {
-            //then add the first team as a duplicate
-            this.teams[1] = this.teams[0];
-        }
     }).bind(this), function (errVal) {
         //ERROR
     });
 
     //get match goals
     this.goals = [];
-    GetMatches.goals(this.matchId).then((function (goals) {
+    //when we have goals, players, and matches
+    $q.all([GetMatches.goals(this.matchId), requestPlayers, requestMatchTeams]).then((function (responses) {
         //SUCCESS
-        //when we have players
-        $q.when(requestPlayers, (function () {
-            //when we have teams
-            $q.when(requestMatchTeams, (function () {
-                //SUCCESS
-                //loop goals
-                for (var i = 0; i < goals.length; i++) {
-                    //store goal id
-                    goals[i].goalId = goals[i].id;
-                    //store player name
-                    goals[i].playerName = this.players[goals[i].playerId].name;
-                    //store team logo
-                    goals[i].logoUrl = this.teams[goals[i].teamId].logoUrl;
-                    //save goal
-                    this.goals.push(goals[i]);
-                }
-                //sort goals by match minute
-                this.goals.sort(function (a, b) {
-                    return a.matchMinute - b.matchMinute;
-                });
-            }).bind(this));
-        }).bind(this));
+        //get goals
+        var goals = responses[0];
+        //loop goals
+        for (var i = 0; i < goals.length; i++) {
+            //store goal id
+            goals[i].goalId = goals[i].id;
+            //store player name
+            goals[i].playerName = this.players[goals[i].playerId].name;
+            //store team logo
+            goals[i].logoUrl = this.teams[goals[i].teamId].logoUrl;
+            //save goal
+            this.goals.push(goals[i]);
+        }
+        //sort goals by match minute
+        this.goals.sort(function (a, b) {
+            return a.matchMinute - b.matchMinute;
+        });
     }).bind(this), function (errVal) {
         //ERROR
     });
@@ -53079,7 +53075,7 @@ MatchView = (function (_React$Component) {
         key: 'render',
         value: function render() {
             //if our match has been loaded
-            if (this.props.t.match.id == this.props.t.matchId && Object.keys(this.props.t.teams).length == 2) {
+            if (this.props.t.match.id == this.props.t.matchId && Object.keys(this.props.t.teams).length > 0) {
                 //display the team panel
                 return _react2['default'].createElement(
                     _MatchPanelJs.MatchPanel,
@@ -53107,6 +53103,8 @@ MatchController.$inject = ['$routeParams', 'GetTeams', 'GetMatches', 'GetPlayers
 MatchView.propTypes = {
     t: _react2['default'].PropTypes.object
 };
+//inject resources into directive
+MatchDirective.$inject = ['reactDirective'];
 //export MatchView directive
 exports.MatchDirective = MatchDirective;
 
@@ -53174,7 +53172,7 @@ exports.GoalCount = GoalCount;
 },{"react":163}],173:[function(require,module,exports){
 /* GoalEntry.js
  * Displays a single entry in the goals list
- * Dependencies: React
+ * Dependencies: React, MatchMinute, GoalDistance components
  * Author: Joshua Carter
  * Created: October 19, 2015
  */
@@ -53249,10 +53247,10 @@ GoalEntry.propTypes = {
 //export component
 exports.GoalEntry = GoalEntry;
 
-},{"../shared/GoalDistance.js":182,"../shared/MatchMinute.js":183,"react":163}],174:[function(require,module,exports){
+},{"../shared/GoalDistance.js":183,"../shared/MatchMinute.js":184,"react":163}],174:[function(require,module,exports){
 /* GoalList.js
  * Displays a match goal list
- * Dependencies: React, TeamEntry
+ * Dependencies: React, GoalEntry component
  * Author: Joshua Carter
  * Created: October 19, 2015
  */
@@ -53319,7 +53317,7 @@ exports.GoalList = GoalList;
 },{"./GoalEntry.js":173,"react":163}],175:[function(require,module,exports){
 /* MatchEntry.js
  * Displays a single entry in the match goals list
- * Dependencies: React
+ * Dependencies: React, DateTime, MatchResult, TeamLogo, MatchScore, GoalCount, GoalList components
  * Author: Joshua Carter
  * Created: October 19, 2015
  */
@@ -53384,7 +53382,7 @@ var MatchEntry = (function (_React$Component) {
                 { className: 'game-row' },
                 _react2['default'].createElement(
                     'div',
-                    { onClick: this.handleClick.bind(this), className: 'row game-info' },
+                    { onClick: this.handleClick.bind(this), className: 'row game-info link' },
                     _react2['default'].createElement(
                         'div',
                         { className: 'col-xs-5 col-sm-4' },
@@ -53430,12 +53428,12 @@ MatchEntry.propTypes = {
 //export component
 exports.MatchEntry = MatchEntry;
 
-},{"../shared/DateTime.js":181,"../shared/MatchResult.js":184,"../shared/MatchScore.js":185,"../shared/TeamLogo.js":192,"./GoalCount.js":172,"./GoalList.js":174,"react":163}],176:[function(require,module,exports){
-/* MatchList.js
- * Displays the player match list
- * Dependencies: React, MatchEntry, PanelH4
+},{"../shared/DateTime.js":182,"../shared/MatchResult.js":185,"../shared/MatchScore.js":186,"../shared/TeamLogo.js":194,"./GoalCount.js":172,"./GoalList.js":174,"react":163}],176:[function(require,module,exports){
+/* MatchGroup.js
+ * Displays the player match group
+ * Dependencies: React, MatchEntry, PanelH5 components
  * Author: Joshua Carter
- * Created: October 19, 2015
+ * Created: October 20, 2015
  */
 "use strict";
 //include modules
@@ -53461,6 +53459,76 @@ var _react2 = _interopRequireDefault(_react);
 
 var _MatchEntryJs = require('./MatchEntry.js');
 
+var _sharedPanelH5Js = require('../shared/PanelH5.js');
+
+//create MatchGroup React component
+var MatchGroup = (function (_React$Component) {
+    _inherits(MatchGroup, _React$Component);
+
+    function MatchGroup() {
+        _classCallCheck(this, MatchGroup);
+
+        _get(Object.getPrototypeOf(MatchGroup.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(MatchGroup, [{
+        key: 'render',
+        value: function render() {
+            //loop matches and create entries
+            var matchNodes = this.props.matches.map((function (match) {
+                return _react2['default'].createElement(_MatchEntryJs.MatchEntry, { nav: this.props.nav, key: match.matchId, teamId: this.props.teamId, match: match });
+            }).bind(this));
+            return _react2['default'].createElement(
+                'div',
+                { className: 'match-year-group' },
+                _react2['default'].createElement(_sharedPanelH5Js.PanelH5, { heading: this.props.year }),
+                matchNodes
+            );
+        }
+    }]);
+
+    return MatchGroup;
+})(_react2['default'].Component);
+//define prop types of MatchGroup componnet
+MatchGroup.propTypes = {
+    matches: _react2['default'].PropTypes.array,
+    teamId: _react2['default'].PropTypes.number,
+    year: _react2['default'].PropTypes.node
+};
+//export directive
+exports.MatchGroup = MatchGroup;
+
+},{"../shared/PanelH5.js":192,"./MatchEntry.js":175,"react":163}],177:[function(require,module,exports){
+/* MatchList.js
+ * Displays the player match list
+ * Dependencies: React, MatchEntry, PanelH4 components
+ * Author: Joshua Carter
+ * Created: October 19, 2015
+ */
+"use strict";
+//include modules
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+//include components
+
+var _MatchGroupJs = require('./MatchGroup.js');
+
 var _sharedPanelH4Js = require('../shared/PanelH4.js');
 
 //create MatchList React component
@@ -53477,9 +53545,10 @@ var MatchList = (function (_React$Component) {
         key: 'render',
         value: function render() {
             //loop matches and create entries
-            var matchNodes = this.props.matches.map((function (match) {
-                return _react2['default'].createElement(_MatchEntryJs.MatchEntry, { nav: this.props.nav, key: match.matchId, teamId: this.props.teamId, match: match });
-            }).bind(this));
+            var matchNodes = [];
+            for (var year in this.props.matches) {
+                matchNodes.push(_react2['default'].createElement(_MatchGroupJs.MatchGroup, { nav: this.props.nav, key: year, teamId: this.props.teamId, year: year, matches: this.props.matches[year] }));
+            };
             return _react2['default'].createElement(
                 'div',
                 { id: 'player-game-goals' },
@@ -53493,13 +53562,13 @@ var MatchList = (function (_React$Component) {
 })(_react2['default'].Component);
 //define prop types of MatchList componnet
 MatchList.propTypes = {
-    matches: _react2['default'].PropTypes.array,
+    matches: _react2['default'].PropTypes.object,
     teamId: _react2['default'].PropTypes.number
 };
 //export directive
 exports.MatchList = MatchList;
 
-},{"../shared/PanelH4.js":190,"./MatchEntry.js":175,"react":163}],177:[function(require,module,exports){
+},{"../shared/PanelH4.js":191,"./MatchGroup.js":176,"react":163}],178:[function(require,module,exports){
 /* PlayerView.js
  * Displays the player
  * Dependencies: React, 
@@ -53577,7 +53646,7 @@ var PlayerController = function PlayerController($location, $scope, $routeParams
         avatarUrl: ""
     };
     //get player goals after we have player info
-    this.matchesGoals = [];
+    this.matchesGoals = {};
     //count goals
     this.numGoals = 0;
     requestPlayer = GetPlayers.single(this.playerId).then((function (player) {
@@ -53593,7 +53662,7 @@ var PlayerController = function PlayerController($location, $scope, $routeParams
         //when we have matches and teams
         $q.when(requestMatchesTeams, (function () {
             //SUCCESS
-            var curMatch, curGoal;
+            var curMatch, curGoal, curYear;
             //loop goals by match
             for (var matchId in goals) {
                 curMatch = this.matches[matchId];
@@ -53621,14 +53690,23 @@ var PlayerController = function PlayerController($location, $scope, $routeParams
                 curMatch.goals.sort(function (a, b) {
                     return a.matchMinute = b.matchMinute;
                 });
-                //store the match at the beginning of the array
-                //(so we know the first value is our current match)
-                this.matchesGoals.unshift(curMatch);
+                //get the year of the match
+                curYear = new Date(curMatch.timestamp).getUTCFullYear();
+                //if year hasn't been initialized
+                if (!(curYear in this.matchesGoals)) {
+                    //do so
+                    this.matchesGoals[curYear] = [];
+                }
+                //store the match
+                this.matchesGoals[curYear].push(curMatch);
             }
-            //sort matches by timestamp
-            this.matchesGoals.sort(function (a, b) {
-                return a.timestamp = b.timestamp;
-            });
+            //loop stored matches
+            for (var y in this.matchesGoals) {
+                //sort matches by date
+                this.matchesGoals[y].sort(function (a, b) {
+                    return a.timestamp - b.timestamp;
+                });
+            }
 
             //also, since at this point we know we have both the teams and the player
             //store the player's team's name
@@ -53664,7 +53742,7 @@ PlayerView = (function (_React$Component) {
                     null,
                     _react2['default'].createElement(
                         'a',
-                        { href: teamHref },
+                        { className: 'link', href: teamHref },
                         this.props.t.player.teamName
                     ),
                     ' | ',
@@ -53693,7 +53771,7 @@ PlayerView = (function (_React$Component) {
 
     return PlayerView;
 })(_react2['default'].Component),
-    PlayerDirective = function PlayerDirective(reactDirective, $compile) {
+    PlayerDirective = function PlayerDirective(reactDirective) {
     return reactDirective(PlayerView, undefined, {
         controller: PlayerController,
         controllerAs: 'scope'
@@ -53705,12 +53783,15 @@ PlayerController.$inject = ['$location', '$scope', '$routeParams', 'GetTeams', '
 PlayerView.propTypes = {
     t: _react2['default'].PropTypes.object
 };
+//inject resources into directive
+PlayerDirective.$inject = ['reactDirective'];
 //export PlayerView directive
 exports.PlayerDirective = PlayerDirective;
 
-},{"../shared/PanelView.js":191,"./GoalCount.js":172,"./MatchList.js":176,"react":163}],178:[function(require,module,exports){
+},{"../shared/PanelView.js":193,"./GoalCount.js":172,"./MatchList.js":177,"react":163}],179:[function(require,module,exports){
 /* GetMatches.js
- * Fetches info for teams
+ * Fetches info for matches
+ * Dependencies: $http, $q resources, API_ROOT constant
  * Author: Joshua Carter
  * Created: October 15, 2015
  */
@@ -53889,7 +53970,7 @@ GetMatches.$inject = ['$http', '$q', 'API_ROOT'];
 //export GetTeams service
 exports.GetMatches = GetMatches;
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 /* GetPlayers.js
  * Fetches info for players
  * Dependencies: GetMatches service, $http, $q resources, API_ROOT constant
@@ -54068,10 +54149,10 @@ GetPlayers.$inject = ['$http', '$q', 'API_ROOT', 'GetMatches'];
 //export GetPlayers service
 exports.GetPlayers = GetPlayers;
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 /* GetTeams.js
  * Fetches info for teams
- * Dependencies: GetMatches service
+ * Dependencies: $http, $q resources, API_ROOT constant, GetMatches service
  * Author: Joshua Carter
  * Created: October 15, 2015
  */
@@ -54289,10 +54370,10 @@ GetTeams.$inject = ['$http', '$q', 'API_ROOT', 'GetMatches'];
 //export GetTeams service
 exports.GetTeams = GetTeams;
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 /* DateTime.js
  * Displays a timestamp in PST time
- * Dependencies: React
+ * Dependencies: React, moment
  * Author: Joshua Carter
  * Created: October 16, 2015
  */
@@ -54376,7 +54457,7 @@ DateTime.propTypes = {
 //export component
 exports.DateTime = DateTime;
 
-},{"moment":6,"react":163}],182:[function(require,module,exports){
+},{"moment":6,"react":163}],183:[function(require,module,exports){
 /* GoalDistance.js
  * Displays the distance of a goal
  * Dependencies: React
@@ -54434,7 +54515,7 @@ GoalDistance.propTypes = {
 //export component
 exports.GoalDistance = GoalDistance;
 
-},{"react":163}],183:[function(require,module,exports){
+},{"react":163}],184:[function(require,module,exports){
 /* MatchMinute.js
  * Displays the minute of a match
  * Dependencies: React
@@ -54492,7 +54573,7 @@ MatchMinute.propTypes = {
 //export component
 exports.MatchMinute = MatchMinute;
 
-},{"react":163}],184:[function(require,module,exports){
+},{"react":163}],185:[function(require,module,exports){
 /* MatchResult.js
  * Displays the result of a match
  * Dependencies: React
@@ -54559,7 +54640,7 @@ MatchResult.propTypes = {
 //export component
 exports.MatchResult = MatchResult;
 
-},{"react":163}],185:[function(require,module,exports){
+},{"react":163}],186:[function(require,module,exports){
 /* MatchScore.js
  * Displays the score of a match
  * Dependencies: React
@@ -54628,12 +54709,12 @@ MatchScore.propTypes = {
 //export component
 exports.MatchScore = MatchScore;
 
-},{"react":163}],186:[function(require,module,exports){
+},{"react":163}],187:[function(require,module,exports){
 /* PanelContainer.js
  * Displays panel container
  * Dependencies: React
  * Author: Joshua Carter
- * Created: October 16, 2015
+ * Created: October 20, 2015
  */
 "use strict";
 //include modules
@@ -54685,7 +54766,7 @@ PanelContainer.propTypes = {
 //export component
 exports.PanelContainer = PanelContainer;
 
-},{"react":163}],187:[function(require,module,exports){
+},{"react":163}],188:[function(require,module,exports){
 /* PanelContent.js
  * Displays the content section of panel
  * Dependencies: React
@@ -54742,7 +54823,7 @@ PanelContent.propTypes = {
 //export component
 exports.PanelContent = PanelContent;
 
-},{"react":163}],188:[function(require,module,exports){
+},{"react":163}],189:[function(require,module,exports){
 /* PanelH3.js
  * Displays an <h3> header in panel
  * Dependencies: React
@@ -54799,7 +54880,7 @@ PanelH3.propTypes = {
 //export component
 exports.PanelH3 = PanelH3;
 
-},{"react":163}],189:[function(require,module,exports){
+},{"react":163}],190:[function(require,module,exports){
 /* PanelH3Small.js
  * Displays a small <h3> header in panel
  * Dependencies: React
@@ -54860,7 +54941,7 @@ PanelH3Small.propTypes = {
 //export component
 exports.PanelH3Small = PanelH3Small;
 
-},{"react":163}],190:[function(require,module,exports){
+},{"react":163}],191:[function(require,module,exports){
 /* PanelH4.js
  * Displays an <h4> header in panel
  * Dependencies: React
@@ -54921,7 +55002,68 @@ PanelH4.propTypes = {
 //export component
 exports.PanelH4 = PanelH4;
 
-},{"react":163}],191:[function(require,module,exports){
+},{"react":163}],192:[function(require,module,exports){
+/* PanelH5.js
+ * Displays an <h5> header in panel
+ * Dependencies: React
+ * Author: Joshua Carter
+ * Created: October 16, 2015
+ */
+"use strict";
+//include modules
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+//create PanelH5 react component
+var PanelH5 = (function (_React$Component) {
+    _inherits(PanelH5, _React$Component);
+
+    function PanelH5() {
+        _classCallCheck(this, PanelH5);
+
+        _get(Object.getPrototypeOf(PanelH5.prototype), "constructor", this).apply(this, arguments);
+    }
+
+    _createClass(PanelH5, [{
+        key: "render",
+        value: function render() {
+            return _react2["default"].createElement(
+                "h5",
+                null,
+                _react2["default"].createElement(
+                    "strong",
+                    null,
+                    this.props.heading
+                )
+            );
+        }
+    }]);
+
+    return PanelH5;
+})(_react2["default"].Component);
+//define prop types
+PanelH5.propTypes = {
+    heading: _react2["default"].PropTypes.node
+};
+//export component
+exports.PanelH5 = PanelH5;
+
+},{"react":163}],193:[function(require,module,exports){
 /* PanelView.js
  * Displays the panel
  * Dependencies: React
@@ -55010,7 +55152,7 @@ PanelView.propTypes = {
 //export component
 exports.PanelView = PanelView;
 
-},{"./PanelContainer.js":186,"./PanelContent.js":187,"./PanelH3.js":188,"./PanelH3Small.js":189,"react":163}],192:[function(require,module,exports){
+},{"./PanelContainer.js":187,"./PanelContent.js":188,"./PanelH3.js":189,"./PanelH3Small.js":190,"react":163}],194:[function(require,module,exports){
 /* TeamLogo.js
  * Displays the team logo
  * Dependencies: React
@@ -55071,9 +55213,9 @@ TeamLogo.propTypes = {
 //export component
 exports.TeamLogo = TeamLogo;
 
-},{"react":163}],193:[function(require,module,exports){
+},{"react":163}],195:[function(require,module,exports){
 /* TeamStats.js
- * Displays the team logo
+ * Displays the wins/losses for a team
  * Dependencies: React
  * Author: Joshua Carter
  * Created: October 15, 2015
@@ -55137,10 +55279,10 @@ TeamStats.propTypes = {
 //export component
 exports.TeamStats = TeamStats;
 
-},{"react":163}],194:[function(require,module,exports){
+},{"react":163}],196:[function(require,module,exports){
 /* MatchEntry.js
  * Displays a single entry in the matches list
- * Dependencies: React
+ * Dependencies: React, DateTime, MatchResult, TeamLogo, MatchScore components
  * Author: Joshua Carter
  * Created: October 17, 2015
  */
@@ -55205,7 +55347,7 @@ var MatchEntry = (function (_React$Component) {
             }
             return _react2['default'].createElement(
                 'div',
-                { onClick: this.handleClick.bind(this), className: 'row' },
+                { onClick: this.handleClick.bind(this), className: 'row link' },
                 _react2['default'].createElement(
                     'div',
                     { className: 'col-xs-6 col-sm-6' },
@@ -55244,12 +55386,12 @@ MatchEntry.propTypes = {
 //export component
 exports.MatchEntry = MatchEntry;
 
-},{"../shared/DateTime.js":181,"../shared/MatchResult.js":184,"../shared/MatchScore.js":185,"../shared/TeamLogo.js":192,"react":163}],195:[function(require,module,exports){
-/* MatchList.js
- * Displays the team match list
- * Dependencies: React, TeamEntry
+},{"../shared/DateTime.js":182,"../shared/MatchResult.js":185,"../shared/MatchScore.js":186,"../shared/TeamLogo.js":194,"react":163}],197:[function(require,module,exports){
+/* MatchGroup.js
+ * Displays the team match group
+ * Dependencies: React, MatchEntry, PanelH5 components
  * Author: Joshua Carter
- * Created: October 17, 2015
+ * Created: October 20, 2015
  */
 "use strict";
 //include modules
@@ -55275,19 +55417,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _MatchEntryJs = require('./MatchEntry.js');
 
-var _sharedPanelH4Js = require('../shared/PanelH4.js');
+var _sharedPanelH5Js = require('../shared/PanelH5.js');
 
-//create MatchList React component
-var MatchList = (function (_React$Component) {
-    _inherits(MatchList, _React$Component);
+//create MatchGroup React component
+var MatchGroup = (function (_React$Component) {
+    _inherits(MatchGroup, _React$Component);
 
-    function MatchList() {
-        _classCallCheck(this, MatchList);
+    function MatchGroup() {
+        _classCallCheck(this, MatchGroup);
 
-        _get(Object.getPrototypeOf(MatchList.prototype), 'constructor', this).apply(this, arguments);
+        _get(Object.getPrototypeOf(MatchGroup.prototype), 'constructor', this).apply(this, arguments);
     }
 
-    _createClass(MatchList, [{
+    _createClass(MatchGroup, [{
         key: 'render',
         value: function render() {
             //loop matches and create entries
@@ -55296,29 +55438,30 @@ var MatchList = (function (_React$Component) {
             }).bind(this));
             return _react2['default'].createElement(
                 'div',
-                { id: 'team-games', className: 'col-xs-12 col-sm-6' },
-                _react2['default'].createElement(_sharedPanelH4Js.PanelH4, { heading: 'Games' }),
+                { className: 'match-year-group' },
+                _react2['default'].createElement(_sharedPanelH5Js.PanelH5, { heading: this.props.year }),
                 matchNodes
             );
         }
     }]);
 
-    return MatchList;
+    return MatchGroup;
 })(_react2['default'].Component);
-//define prop types of TeamList componnet
-MatchList.propTypes = {
+//define prop types of MatchGroup componnet
+MatchGroup.propTypes = {
     matches: _react2['default'].PropTypes.array,
-    teamId: _react2['default'].PropTypes.number
+    teamId: _react2['default'].PropTypes.number,
+    year: _react2['default'].PropTypes.node
 };
 //export directive
-exports.MatchList = MatchList;
+exports.MatchGroup = MatchGroup;
 
-},{"../shared/PanelH4.js":190,"./MatchEntry.js":194,"react":163}],196:[function(require,module,exports){
-/* PlayerEntry.js
- * Displays a single entry in the matches list
- * Dependencies: React
+},{"../shared/PanelH5.js":192,"./MatchEntry.js":196,"react":163}],198:[function(require,module,exports){
+/* MatchList.js
+ * Displays the team match list
+ * Dependencies: React, MatchGroup, PanelH4 components
  * Author: Joshua Carter
- * Created: October 18, 2015
+ * Created: October 17, 2015
  */
 "use strict";
 //include modules
@@ -55342,13 +55485,73 @@ var _react2 = _interopRequireDefault(_react);
 
 //include components
 
-var _sharedDateTimeJs = require('../shared/DateTime.js');
+var _MatchGroupJs = require('./MatchGroup.js');
 
-var _sharedMatchResultJs = require('../shared/MatchResult.js');
+var _sharedPanelH4Js = require('../shared/PanelH4.js');
 
-var _sharedTeamLogoJs = require('../shared/TeamLogo.js');
+//create MatchList React component
+var MatchList = (function (_React$Component) {
+    _inherits(MatchList, _React$Component);
 
-var _sharedMatchScoreJs = require('../shared/MatchScore.js');
+    function MatchList() {
+        _classCallCheck(this, MatchList);
+
+        _get(Object.getPrototypeOf(MatchList.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(MatchList, [{
+        key: 'render',
+        value: function render() {
+            //loop matches and create entries
+            var matchNodes = [];
+            for (var year in this.props.matches) {
+                matchNodes.push(_react2['default'].createElement(_MatchGroupJs.MatchGroup, { nav: this.props.nav, key: year, teamId: this.props.teamId, year: year, matches: this.props.matches[year] }));
+            };
+            return _react2['default'].createElement(
+                'div',
+                { id: 'team-games', className: 'col-xs-12 col-sm-6' },
+                _react2['default'].createElement(_sharedPanelH4Js.PanelH4, { heading: 'Games' }),
+                matchNodes
+            );
+        }
+    }]);
+
+    return MatchList;
+})(_react2['default'].Component);
+//define prop types of MatchList componnet
+MatchList.propTypes = {
+    matches: _react2['default'].PropTypes.object,
+    teamId: _react2['default'].PropTypes.number
+};
+//export directive
+exports.MatchList = MatchList;
+
+},{"../shared/PanelH4.js":191,"./MatchGroup.js":197,"react":163}],199:[function(require,module,exports){
+/* PlayerEntry.js
+ * Displays a single entry in the players list
+ * Dependencies: React
+ * Author: Joshua Carter
+ * Created: October 18, 2015
+ */
+"use strict";
+//include modules
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 //create PlayerEntry React component
 var PlayerEntry = (function (_React$Component) {
@@ -55374,7 +55577,7 @@ var PlayerEntry = (function (_React$Component) {
             var playerHref = '#' + this.playerPath;
             return _react2['default'].createElement(
                 'div',
-                { onClick: this.handleClick.bind(this), className: 'row' },
+                { onClick: this.handleClick.bind(this), className: 'row link' },
                 _react2['default'].createElement(
                     'div',
                     { className: 'col-xs-1 col-sm-1' },
@@ -55410,10 +55613,10 @@ PlayerEntry.propTypes = {
 //export component
 exports.PlayerEntry = PlayerEntry;
 
-},{"../shared/DateTime.js":181,"../shared/MatchResult.js":184,"../shared/MatchScore.js":185,"../shared/TeamLogo.js":192,"react":163}],197:[function(require,module,exports){
+},{"react":163}],200:[function(require,module,exports){
 /* PlayerList.js
- * Displays the team match list
- * Dependencies: React, TeamEntry
+ * Displays the team player list
+ * Dependencies: React, PlayerEntry, PanelH4 components
  * Author: Joshua Carter
  * Created: October 18, 2015
  */
@@ -55480,7 +55683,7 @@ PlayerList.propTypes = {
 //export directive
 exports.PlayerList = PlayerList;
 
-},{"../shared/PanelH4.js":190,"./PlayerEntry.js":196,"react":163}],198:[function(require,module,exports){
+},{"../shared/PanelH4.js":191,"./PlayerEntry.js":199,"react":163}],201:[function(require,module,exports){
 /* TeamRank.js
  * Displays the rank of a team
  * Dependencies: React
@@ -55538,10 +55741,13 @@ TeamRank.propTypes = {
 //export component
 exports.TeamRank = TeamRank;
 
-},{"react":163}],199:[function(require,module,exports){
+},{"react":163}],202:[function(require,module,exports){
 /* TeamView.js
  * Displays the team
- * Dependencies: React, TeamEntry
+ * Dependencies: React, 
+    - components: PanelView, PlayerList, MatchList, TeamLogo, TeamRank, TeamStats,
+    - resources: $location, $scope, $routeParams, $q
+    - services: GetTeams, GetMatches
  * Author: Joshua Carter
  * Created: October 14, 2015
  */
@@ -55626,11 +55832,11 @@ var TeamController = function TeamController($location, $scope, $routeParams, Ge
         //ERROR
     });
 
-    //get matches and sort by date
-    this.matches = [];
+    //get matches, store by year, and sort by date
+    this.matches = {};
     GetMatches.all().then((function (matches) {
         //SUCCESS
-        var curId;
+        var curId, curYear;
         //if we have matches for our team
         if (matches.byTeam[this.teamId]) {
             //loop matches by team
@@ -55642,13 +55848,23 @@ var TeamController = function TeamController($location, $scope, $routeParams, Ge
                 matches.byId[curId].opponent = {
                     teamId: matches.byId[curId].teamIds[matches.byId[curId].teamIds[0] != this.teamId ? 0 : 1]
                 };
+                //get the year of the match
+                curYear = new Date(matches.byId[curId].timestamp).getUTCFullYear();
+                //if year hasn't been initialized
+                if (!(curYear in this.matches)) {
+                    //do so
+                    this.matches[curYear] = [];
+                }
                 //add to matches
-                this.matches.push(matches.byId[curId]);
+                this.matches[curYear].push(matches.byId[curId]);
             }
-            //sort matches by date
-            this.matches.sort(function (a, b) {
-                return a.timestamp - b.timestamp;
-            });
+            //loop stored matches
+            for (var y in this.matches) {
+                //sort matches by date
+                this.matches[y].sort(function (a, b) {
+                    return a.timestamp - b.timestamp;
+                });
+            }
             //get teams, return promise
             return GetTeams.all();
         } //else, do nothing
@@ -55661,11 +55877,13 @@ var TeamController = function TeamController($location, $scope, $routeParams, Ge
     }).then((function (teams) {
         //SUCCESS
         //if we have matches
-        if (this.matches.length > 0) {
+        if (Object.keys(this.matches).length > 0) {
             //loop matches
-            for (var id in this.matches) {
-                //add opponent info to match
-                this.matches[id].opponent.logo = teams[this.matches[id].opponent.teamId].logoUrl;
+            for (var y in this.matches) {
+                for (var i = 0; i < this.matches[y].length; i++) {
+                    //add opponent info to match
+                    this.matches[y][i].opponent.logo = teams[this.matches[y][i].opponent.teamId].logoUrl;
+                }
             }
         } //else do nothing
     }).bind(this), function (errVal) {
@@ -55714,7 +55932,7 @@ TeamView = (function (_React$Component) {
 
     return TeamView;
 })(_react2['default'].Component),
-    TeamDirective = function TeamDirective(reactDirective, $compile) {
+    TeamDirective = function TeamDirective(reactDirective) {
     return reactDirective(TeamView, undefined, {
         controller: TeamController,
         controllerAs: 'scope'
@@ -55726,7 +55944,9 @@ TeamController.$inject = ['$location', '$scope', '$routeParams', 'GetTeams', 'Ge
 TeamView.propTypes = {
     t: _react2['default'].PropTypes.object
 };
+//inject resources into directive
+TeamDirective.$inject = ['reactDirective'];
 //export TeamView directive
 exports.TeamDirective = TeamDirective;
 
-},{"../shared/PanelView.js":191,"../shared/TeamLogo.js":192,"../shared/TeamStats.js":193,"./MatchList.js":195,"./PlayerList.js":197,"./TeamRank.js":198,"react":163}]},{},[164]);
+},{"../shared/PanelView.js":193,"../shared/TeamLogo.js":194,"../shared/TeamStats.js":195,"./MatchList.js":198,"./PlayerList.js":200,"./TeamRank.js":201,"react":163}]},{},[164]);
