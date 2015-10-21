@@ -1,6 +1,6 @@
 /* TeamEntry.js
  * Displays a single entry in the team list
- * Dependencies: React, TeamLogo
+ * Dependencies: React, TeamLogo, TeamStats
  * Author: Joshua Carter
  * Created: October 14, 2015
  */

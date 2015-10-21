@@ -1,6 +1,9 @@
 /* TeamList.js
  * Displays the team list
- * Dependencies: React, TeamEntry
+ * Dependencies: React, 
+    - components: TeamEntry,
+    - services: GetTeams, GetMatches,
+    - resources: $location, $scope
  * Author: Joshua Carter
  * Created: October 14, 2015
  */
