@@ -1,6 +1,6 @@
 /* DateTime.js
  * Displays a timestamp in PST time
- * Dependencies: React
+ * Dependencies: React, moment
  * Author: Joshua Carter
  * Created: October 16, 2015
  */
