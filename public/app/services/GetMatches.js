@@ -1,5 +1,6 @@
 /* GetMatches.js
- * Fetches info for teams
+ * Fetches info for matches
+ * Dependencies: $http, $q resources, API_ROOT constant
  * Author: Joshua Carter
  * Created: October 15, 2015
  */
